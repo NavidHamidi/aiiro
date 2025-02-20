@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  fastapi-llm:
+    build:
+      context: ./fastapi-llm
+    ports:
+      - '5000:5000'
+    env_file:
+      - ./fastapi-llm/.env
+    networks:
+      - app-network
+
+  nestjs-backend:
+    build:
+      context: ./nestjs-backend
+    ports:
+      - '4000:4000'
+    networks:
+      - app-network
+    depends_on:
+      - fastapi-llm
+
+  nextjs-frontend:
+    build:
+      context: ./nextjs-frontend
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    depends_on:
+      - nestjs-backend
+
+networks:
+  app-network:
+    driver: bridge
