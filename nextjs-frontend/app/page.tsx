@@ -7,6 +7,7 @@ export default function Home() {
   const [response, setResponse] = useState<string>('');
 
   const handleSubmit = async () => {
+    setResponse("")
     try {
       const res = await fetch('/api/ask', {
         method: 'POST',
