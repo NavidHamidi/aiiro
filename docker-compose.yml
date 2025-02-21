@@ -13,7 +13,7 @@ services:
     build:
       context: ./nestjs-backend
     env_file:
-      - ./nestjs-backend/.env.prod
+      - ./nestjs-backend/.env.production
     ports:
       - '4000:4000'
     networks:
