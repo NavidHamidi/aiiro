@@ -1,21 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import Spinner from './components/spinner';
 
 export default function Home() {
   const [question, setQuestion] = useState<string>('');
   const [response, setResponse] = useState<string>('');
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = async () => {
-    setResponse("")
+  const handleSubmit = () => {
+    setResponse('');
     try {
-      const res = await fetch('/api/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question }),
+      startTransition(async () => {
+        const res = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question }),
+        });
+        const data = await res.json();
+        setResponse(data.response);
       });
-      const data = await res.json();
-      setResponse(data.response);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -34,12 +38,14 @@ export default function Home() {
             placeholder="Ask a question to AI"
             onChange={(e) => setQuestion(e.target.value)}
           />
-          <input
+          <button
             type="submit"
             className="w-full p-4 text-lg text-white bg-green-700 hover:bg-green-900 rounded-lg cursor-pointer"
-            value="Ask"
             onClick={handleSubmit}
-          />
+            disabled={isPending}
+          >
+            {isPending ? <Spinner /> : 'Ask'}
+          </button>
         </div>
       </main>
     </div>
