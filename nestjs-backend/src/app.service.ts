@@ -9,8 +9,7 @@ export class AppService {
   async ask(question: string): Promise<string> {
     const body: OpenAICompletionRequest = { prompt: question };
     try {
-      const response = await fetch('http://fastapi-llm:5000/generate', {
-        // http://fastapi-llm:5000/generate
+      const response = await fetch(`${process.env.FASTAPI_URL}/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

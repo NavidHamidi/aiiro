@@ -15,4 +15,4 @@ EXPOSE 4000
 
 RUN pnpm run build
 
-CMD ["pnpm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod", "--env-file", ".env.prod"]
