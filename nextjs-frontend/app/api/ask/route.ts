@@ -4,7 +4,7 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
     const question = body.question;
-    const res = await fetch('http://localhost:4000/ask', {
+    const res = await fetch('http://nestjs-backend:4000/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question }),

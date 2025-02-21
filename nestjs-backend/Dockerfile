@@ -1,15 +1,18 @@
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /backend
+
+RUN npm i -g pnpm 
 
 COPY package.json .
+COPY pnpm-lock.yaml .
 COPY tsconfig.json .
 COPY src ./src
 
-RUN npm install
+RUN pnpm i
 
 EXPOSE 4000
 
-RUN ["npm", "run", "build"]
+RUN pnpm run build
 
-CMD ["npm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod"]

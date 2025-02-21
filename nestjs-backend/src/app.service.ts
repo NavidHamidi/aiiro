@@ -9,7 +9,7 @@ export class AppService {
   async ask(question: string): Promise<string> {
     const body: OpenAICompletionRequest = { prompt: question };
     try {
-      const response = await fetch('http://localhost:5000/generate', {
+      const response = await fetch('http://fastapi-llm:5000/generate', {
         // http://fastapi-llm:5000/generate
         method: 'POST',
         headers: {

@@ -1,13 +1,23 @@
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /frontend
 
-COPY . .
-RUN npm install
+RUN npm i -g pnpm
+
+COPY package.json .
+COPY pnpm-lock.yaml .
+COPY /app ./app
+COPY next.config.ts .
+COPY postcss.config.mjs .
+COPY /public ./public
+COPY tsconfig.json .
+COPY tailwind.config.ts .
+
+RUN pnpm i
 
 EXPOSE 3000
 
-RUN ["npm", "run", "build"]
+RUN pnpm run build
 
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "run", "start"]
 
