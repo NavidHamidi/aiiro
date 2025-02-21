@@ -7,6 +7,7 @@ RUN npm i -g pnpm
 COPY package.json .
 COPY pnpm-lock.yaml .
 COPY tsconfig.json .
+COPY .env.production .
 COPY src ./src
 
 RUN pnpm i
@@ -15,4 +16,4 @@ EXPOSE 4000
 
 RUN pnpm run build
 
-CMD ["pnpm", "run", "start:prod", "--env-file", ".env.prod"]
+CMD ["pnpm", "run", "start:prod", "--env-file", ".env.production"]
